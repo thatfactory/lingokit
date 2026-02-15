@@ -1,6 +1,18 @@
 import Testing
 @testable import LingoKit
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+@Test func reExportsIntentClassificationModule() {
+    // Given
+    let exercise = IntentClassificationExercise(
+        prompt: "Wie heißen sie?",
+        intents: ["Name", "Age", "Address"],
+        expectedIntent: "Name"
+    )
+
+    // When
+    let evaluation = exercise.evaluate(selectedIntent: "Name")
+
+    // Then
+    #expect(evaluation.isCorrect)
+    #expect(evaluation.score == 10)
 }
