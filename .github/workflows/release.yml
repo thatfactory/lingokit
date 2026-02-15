@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - '**'
+  release:
+    types:
+      - published
 
 permissions:
   contents: read
