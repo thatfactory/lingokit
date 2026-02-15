@@ -6,6 +6,11 @@ on:
     branches:
       - '**'
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -27,6 +32,57 @@ jobs:
 
       - name: Run Tests
         run: swift test -v
+
+  docs:
+    if: github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, macOS]
+    needs: test
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          clean: true
+      - name: Generate DocC
+        run: |
+          set -euo pipefail
+          DERIVED_DATA=".build/DerivedData"
+          xcodebuild docbuild \
+            -scheme LingoKit \
+            -destination "generic/platform=iOS" \
+            -derivedDataPath "$DERIVED_DATA"
+
+          DOCCARCHIVE=$(find "$DERIVED_DATA" -path "*Build/Products/*/LingoKit.doccarchive" -print -quit)
+          if [ -z "${DOCCARCHIVE:-}" ]; then
+            echo "DocC archive not found in $DERIVED_DATA"
+            exit 1
+          fi
+
+          xcrun docc process-archive transform-for-static-hosting \
+            "$DOCCARCHIVE" \
+            --output-path ./public \
+            --hosting-base-path lingokit
+
+          cat > ./public/index.html <<'EOF'
+          <!doctype html>
+          <meta http-equiv="refresh" content="0; url=/lingokit/documentation/lingokit/" />
+          <title>LingoKit Documentation</title>
+          EOF
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./public
+          name: github-pages
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: docs
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
   notify_package_collection:
     # Only notify when an actual GitHub Release is published
