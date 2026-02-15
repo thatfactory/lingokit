@@ -11,12 +11,15 @@ UI-agnostic domain logic for language-learning exercises.
 
 ## Overview
 
-`LingoKit` is the umbrella module for exercise engines.
+`LingoKit` supports activities across *reading*, *writing*, *listening*, and *speaking* by providing reusable exercise modules and consistent evaluation/scoring logic.
 
-It currently re-exports intent-classification APIs, so client apps can only `import LingoKit` and still access intent-classification symbols.
+Instead of organizing by modality, `LingoKit` organizes by exercise type—such as `intent classification`, `cloze`, or `ordering`—allowing the same exercise to be reused across different contexts. For example, `intent classification` can work with written prompts (*reading*) or audio transcripts (*listening*).
+
+This approach keeps UI and content flexible while making it easy to integrate well-defined challenges and receive consistent, comparable results.
 
 ## Topics
 
 ### Intent Classification
 
-Intent-classification APIs are re-exported from `LingoKitIntentClassification`.
+Use this module to define a prompt, candidate intents, and the expected intent.
+Then evaluate a selected intent and receive a typed evaluation result with correctness and score.
