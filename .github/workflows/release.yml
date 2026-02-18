@@ -80,7 +80,7 @@ jobs:
           name: github-pages
 
   deploy_docs:
-    name: Deploy Docs
+    name: Deploy DocC
     needs: build_docs
     runs-on: ubuntu-latest
     environment:
