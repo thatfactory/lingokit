@@ -23,3 +23,4 @@ This approach keeps UI and content flexible while making it easy to integrate we
 
 Use this module to define a prompt, candidate intents, and the expected intent.
 Then evaluate a selected intent and receive a typed evaluation result with correctness and score.
+When host apps use custom catalog models, conform them to ``IntentClassificationExerciseType`` and evaluate them with ``IntentClassificationEvaluator``.

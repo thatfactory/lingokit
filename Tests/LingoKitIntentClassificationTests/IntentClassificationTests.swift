@@ -1,5 +1,24 @@
+import Foundation
 import Testing
 @testable import LingoKitIntentClassification
+
+private struct StubExercise: IntentClassificationExerciseType {
+    let id: UUID
+    let prompt: String
+    let intents: [String]
+    let expectedIntent: String
+    let feedback: String?
+}
+
+private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
+    exercise: Exercise,
+    selectedIntent: Exercise.Intent
+) -> IntentClassificationEvaluation<Exercise.Intent> {
+    IntentClassificationEvaluator.evaluate(
+        exercise: exercise,
+        selectedIntent: selectedIntent
+    )
+}
 
 @Test func returnsCorrectEvaluationWithStandardScore() {
     // Given
@@ -86,4 +105,54 @@ import Testing
     #expect(exerciseEvaluation.score == evaluatorEvaluation.score)
     #expect(exerciseEvaluation.expectedIntent == evaluatorEvaluation.expectedIntent)
     #expect(exerciseEvaluation.selectedIntent == evaluatorEvaluation.selectedIntent)
+}
+
+@Test func protocolBasedAndConcreteEvaluatorProduceSameResult() {
+    // Given
+    let exercise = IntentClassificationExercise(
+        id: UUID(uuidString: "D8E4D4FB-7D8B-4D6A-9F4B-4CF8A59543B1")!,
+        prompt: "Wie heißen sie?",
+        intents: ["Name", "Age", "Address"],
+        expectedIntent: "Name"
+    )
+
+    // When
+    let concreteEvaluation = IntentClassificationEvaluator.evaluate(
+        exercise: exercise,
+        selectedIntent: "Age"
+    )
+    let protocolEvaluation = evaluateViaProtocol(
+        exercise: exercise,
+        selectedIntent: "Age"
+    )
+
+    // Then
+    #expect(concreteEvaluation.isCorrect == protocolEvaluation.isCorrect)
+    #expect(concreteEvaluation.score == protocolEvaluation.score)
+    #expect(concreteEvaluation.expectedIntent == protocolEvaluation.expectedIntent)
+    #expect(concreteEvaluation.selectedIntent == protocolEvaluation.selectedIntent)
+}
+
+@Test func customExerciseConformingToProtocolCanBeEvaluated() {
+    // Given
+    let exercise = StubExercise(
+        id: UUID(uuidString: "6D2F6A59-C1A9-4D6B-B9B2-2416D53D0A70")!,
+        prompt: "Wie heißen sie?",
+        intents: ["Name", "Age", "Address"],
+        expectedIntent: "Name",
+        feedback: "Richtig!"
+    )
+
+    // When
+    let evaluation = IntentClassificationEvaluator.evaluate(
+        exercise: exercise,
+        selectedIntent: "Name"
+    )
+
+    // Then
+    #expect(evaluation.isCorrect)
+    #expect(evaluation.score == 10)
+    #expect(evaluation.expectedIntent == "Name")
+    #expect(evaluation.selectedIntent == "Name")
+    #expect(evaluation.feedback == "Richtig!")
 }

@@ -13,6 +13,7 @@ Intent-classification exercise definitions, evaluation, and scoring.
 
 Use this module to define a prompt, candidate intents, and the expected intent.
 Then evaluate a selected intent and receive a typed evaluation result with correctness and score.
+You can also evaluate custom exercise models by conforming them to ``IntentClassificationExerciseType``.
 
 ## Usage
 
@@ -31,6 +32,7 @@ let evaluation = exercise.evaluate(selectedIntent: "Name")
 
 ### Core Types
 
+- ``IntentClassificationExerciseType``
 - ``IntentClassificationExercise``
 - ``IntentClassificationEvaluation``
 - ``IntentClassificationScoring``
