@@ -4,6 +4,7 @@
 [![platforms](https://img.shields.io/badge/platforms-iOS%2026+%20%7C%20macOS%2026+%20%7C%20tvOS%2026+%20%7C%20watchOS%2026+-lightgrey.svg?logo=apple&logoColor=white)](https://en.wikipedia.org/wiki/List_of_Apple_operating_systems)
 [![docc](https://img.shields.io/badge/docc-documentation-0288D1.svg?logo=bookstack&logoColor=white)](https://thatfactory.github.io/lingokit/documentation/lingokit/)
 [![license](https://img.shields.io/badge/license-MIT-67ac5b.svg?logo=googledocs&logoColor=white)](https://en.wikipedia.org/wiki/MIT_License)
+[![ci](https://github.com/thatfactory/lingokit/actions/workflows/ci.yml/badge.svg)](https://github.com/thatfactory/lingokit/actions/workflows/ci.yml)
 [![release](https://github.com/thatfactory/lingokit/actions/workflows/release.yml/badge.svg)](https://github.com/thatfactory/lingokit/actions/workflows/release.yml)
 
 # LingoKit

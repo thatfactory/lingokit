@@ -1,12 +1,8 @@
 ---
-name: release
+name: Release
+run-name: Release ${{ github.event.release.tag_name }}
 
 on:
-  schedule:
-    - cron: '0 4 * * *'
-  push:
-    branches:
-      - '**'
   release:
     types:
       - published
@@ -22,13 +18,15 @@ concurrency:
 
 jobs:
   test:
-    if: github.event_name != 'schedule'
+    name: Test Release
     runs-on: [self-hosted, macOS]
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout Repository
+        uses: actions/checkout@v6
         with:
           clean: true
-      - name: Clear SwiftPM caches
+
+      - name: Clear SwiftPM Caches
         run: |
           rm -rf ~/.swiftpm
           rm -rf ~/Library/Caches/org.swift.swiftpm
@@ -39,32 +37,16 @@ jobs:
       - name: Run Tests
         run: swift test -v
 
-  daily_test:
-    if: github.event_name == 'schedule'
-    runs-on: [self-hosted, macOS]
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          clean: true
-      - name: Clear SwiftPM caches
-        run: |
-          rm -rf ~/.swiftpm
-          rm -rf ~/Library/Caches/org.swift.swiftpm
-          rm -rf ~/Library/org.swift.swiftpm
-          rm -rf .swiftpm
-          rm -rf .build
-
-      - name: Run Tests
-        run: swift test -v
-
-  docs:
-    if: github.ref == 'refs/heads/main'
+  build_docs:
+    name: Build DocC
     runs-on: [self-hosted, macOS]
     needs: test
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout Repository
+        uses: actions/checkout@v6
         with:
           clean: true
+
       - name: Generate DocC
         run: |
           set -euo pipefail
@@ -74,31 +56,32 @@ jobs:
             -destination "generic/platform=iOS" \
             -derivedDataPath "$DERIVED_DATA"
 
-          DOCCARCHIVE=$(find "$DERIVED_DATA" -path "*Build/Products/*/LingoKit.doccarchive" -print -quit)
-          if [ -z "${DOCCARCHIVE:-}" ]; then
+          DOCC_ARCHIVE=$(find "$DERIVED_DATA" -path "*Build/Products/*/LingoKit.doccarchive" -print -quit)
+          if [ -z "${DOCC_ARCHIVE:-}" ]; then
             echo "DocC archive not found in $DERIVED_DATA"
             exit 1
           fi
 
           xcrun docc process-archive transform-for-static-hosting \
-            "$DOCCARCHIVE" \
+            "$DOCC_ARCHIVE" \
             --output-path ./public \
             --hosting-base-path lingokit
 
-          cat > ./public/index.html <<'EOF'
+          cat > ./public/index.html <<'INDEX'
           <!doctype html>
           <meta http-equiv="refresh" content="0; url=/lingokit/documentation/lingokit/" />
           <title>LingoKit Documentation</title>
-          EOF
-      - name: Upload Pages artifact
+          INDEX
+
+      - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: ./public
           name: github-pages
 
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: docs
+  deploy_docs:
+    name: Deploy Docs
+    needs: build_docs
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -109,16 +92,14 @@ jobs:
         uses: actions/deploy-pages@v4
 
   notify_package_collection:
-    # Only notify when an actual GitHub Release is published
-    if: github.event_name == 'release' && github.event.action == 'published'
+    name: Notify Package Collection
     runs-on: ubuntu-latest
-    needs: test
-
+    needs: deploy_docs
     steps:
-      - name: Trigger swift-package-collection rebuild
+      - name: Trigger Swift Package Collection Rebuild
         env:
           COLLECTION_REPO: thatfactory/swift-package-collection
-          WORKFLOW_FILE: release.yml
+          WORKFLOW_FILE: publish.yml
           REF: main
           GH_TOKEN: ${{ secrets.COLLECTION_TRIGGER_TOKEN }}
           SOURCE_REPO: ${{ github.repository }}
