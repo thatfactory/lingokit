@@ -1,11 +1,29 @@
-[![Swift](https://img.shields.io/badge/Swift-6.2-ea7a50.svg?logo=swift&logoColor=white)](https://developer.apple.com/swift/)
-[![Xcode](https://img.shields.io/badge/Xcode-26.3-50ace8.svg?logo=xcode&logoColor=white)](https://developer.apple.com/xcode/)
-[![SPM](https://img.shields.io/badge/SPM-ready-b68f6a.svg?logo=gitlfs&logoColor=white)](https://developer.apple.com/documentation/xcode/swift-packages)
-[![Platforms](https://img.shields.io/badge/Platforms-iOS%2026+%20%7C%20macOS%2026+%20%7C%20tvOS%2026+%20%7C%20watchOS%2026+-lightgrey.svg?logo=apple&logoColor=white)](https://en.wikipedia.org/wiki/List_of_Apple_operating_systems)
-[![DocC](https://img.shields.io/badge/DocC-documentation-0288D1.svg?logo=bookstack&logoColor=white)](https://thatfactory.github.io/lingokit/documentation/lingokit/)
-[![License](https://img.shields.io/badge/License-MIT-67ac5b.svg?logo=googledocs&logoColor=white)](https://en.wikipedia.org/wiki/MIT_License)  
-[![CI](https://github.com/thatfactory/lingokit/actions/workflows/ci.yml/badge.svg)](https://github.com/thatfactory/lingokit/actions/workflows/ci.yml)
-[![Release](https://github.com/thatfactory/lingokit/actions/workflows/release.yml/badge.svg)](https://github.com/thatfactory/lingokit/actions/workflows/release.yml)
+<p align="center">
+  <a href="https://developer.apple.com/swift/">
+    <img alt="Swift" src="https://img.shields.io/badge/Swift-6.2-ea7a50.svg?logo=swift&logoColor=white">
+  </a>
+  <a href="https://developer.apple.com/xcode/">
+    <img alt="Xcode" src="https://img.shields.io/badge/Xcode-26.3-50ace8.svg?logo=xcode&logoColor=white">
+  </a>
+  <a href="https://developer.apple.com/documentation/xcode/swift-packages">
+    <img alt="SPM" src="https://img.shields.io/badge/SPM-ready-b68f6a.svg?logo=gitlfs&logoColor=white">
+  </a>
+  <a href="https://en.wikipedia.org/wiki/List_of_Apple_operating_systems">
+    <img alt="Platforms" src="https://img.shields.io/badge/Platforms-iOS%2026+%20%7C%20macOS%2026+%20%7C%20tvOS%2026+%20%7C%20watchOS%2026+-lightgrey.svg?logo=apple&logoColor=white">
+  </a>
+  <a href="https://thatfactory.github.io/lingokit/documentation/lingokit/">
+    <img alt="DocC" src="https://img.shields.io/badge/DocC-documentation-0288D1.svg?logo=bookstack&logoColor=white">
+  </a>
+  <a href="https://en.wikipedia.org/wiki/MIT_License">
+    <img alt="License" src="https://img.shields.io/badge/License-MIT-67ac5b.svg?logo=googledocs&logoColor=white">
+  </a>
+  <a href="https://github.com/thatfactory/lingokit/actions/workflows/ci.yml">
+    <img alt="CI" src="https://github.com/thatfactory/lingokit/actions/workflows/ci.yml/badge.svg">
+  </a>
+  <a href="https://github.com/thatfactory/lingokit/actions/workflows/release.yml">
+    <img alt="Release" src="https://github.com/thatfactory/lingokit/actions/workflows/release.yml/badge.svg">
+  </a>
+</p>
 
 # LingoKit
 A plug-and-play, UI-agnostic Swift toolkit for building and scoring language-learning exercises. 📚
