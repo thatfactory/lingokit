@@ -18,3 +18,8 @@ LingoKit should evolve as a collection of modular exercise engines (intent class
 - accept input and return outcomes (correctness, score, feedback) with no UI dependencies;
 - expose stable, minimal APIs that are straightforward to integrate and version;
 - support future scoring extensions (time bonuses, streak multipliers, difficulty weighting) without breaking existing clients.
+
+## Exercise Types
+- Refer to "Exercise Types.mmd" for a comprehensive overview of the various exercise types that LingoKit can provide.
+- Note that this list is not final and may undergo changes or expansions over time.
+- Feel free to suggest changes to the list.

@@ -1,0 +1,140 @@
+flowchart TB
+
+  ROOT["LingoKit Exercise Taxonomy"]
+
+  %% =========================
+  %% Classification
+  %% =========================
+
+  ROOT --> CLASS["Classification<br/>User selects the correct category or intent"]
+
+  CLASS --> CLASS_R["Reading"]
+  CLASS --> CLASS_L["Listening"]
+
+  CLASS_R --> IC_T["Intent classification (text)<br/>Learner selects communicative intent"]
+  CLASS_R --> REG["Register classification<br/>Learner determines formal or informal tone"]
+  CLASS_R --> TXT["Text type identification<br/>Learner identifies email, form, dialogue, etc."]
+
+  CLASS_L --> IC_A["Intent classification (audio)<br/>Learner selects communicative intent from audio"]
+  CLASS_L --> ATT["Speaker attitude classification<br/>Learner identifies tone or attitude"]
+  CLASS_L --> PHON["Phoneme discrimination<br/>Learner distinguishes similar sounding words"]
+
+  %% =========================
+  %% Extraction
+  %% =========================
+
+  ROOT --> EXT["Extraction<br/>User extracts specific information"]
+
+  EXT --> EXT_R["Reading"]
+  EXT --> EXT_L["Listening"]
+
+  EXT_R --> INFO_R["Information extraction<br/>Learner selects factual details"]
+  EXT_R --> KEYDET["Key detail selection<br/>Learner identifies most relevant information"]
+  EXT_R --> KEYWORD["Keyword identification<br/>Learner selects word carrying key meaning"]
+
+  EXT_L --> INFO_L["Audio information extraction<br/>Learner selects details from dialogue"]
+  EXT_L --> DFACT["Dialogue fact identification<br/>Learner determines who said what"]
+
+  %% =========================
+  %% Completion
+  %% =========================
+
+  ROOT --> COMP["Completion (Cloze)<br/>User completes missing elements"]
+
+  COMP --> COMP_R["Reading"]
+  COMP --> COMP_W["Writing"]
+  COMP --> COMP_L["Listening"]
+
+  COMP_R --> MC["Multiple-choice cloze<br/>Learner selects correct missing word"]
+  COMP_R --> VOC["Contextual vocabulary selection<br/>Learner chooses word fitting context"]
+
+  COMP_W --> TYPED["Typed cloze<br/>Learner types missing word from memory"]
+
+  COMP_L --> ACLOZE["Audio cloze<br/>Learner fills missing word after hearing"]
+  COMP_L --> DICT["Full dictation<br/>Learner writes full sentence after hearing"]
+
+  %% =========================
+  %% Construction
+  %% =========================
+
+  ROOT --> CONS["Construction<br/>User builds language from constrained elements"]
+
+  CONS --> CONS_W["Writing"]
+  CONS --> CONS_S["Speaking"]
+
+  CONS_W --> TILE["Tile assembly<br/>Learner arranges word tiles into sentence"]
+  CONS_W --> GUIDED_W["Guided sentence construction<br/>Learner builds sentence with required elements"]
+
+  CONS_S --> GUIDED_S["Guided speaking<br/>Learner produces speech including required elements"]
+
+  %% =========================
+  %% Ordering
+  %% =========================
+
+  ROOT --> ORD["Ordering<br/>User arranges elements into correct sequence"]
+
+  ORD --> ORD_R["Reading"]
+  ORD --> ORD_L["Listening"]
+
+  ORD_R --> WORDORD["Word ordering<br/>Learner rearranges scrambled words"]
+  ORD_R --> SENTORD["Sentence ordering<br/>Learner orders sentences logically"]
+
+  ORD_L --> DSEQ["Dialogue sequencing<br/>Learner orders spoken segments"]
+  ORD_L --> AORD["Audio clip ordering<br/>Learner arranges events chronologically"]
+
+  %% =========================
+  %% Transformation
+  %% =========================
+
+  ROOT --> TRANS["Transformation<br/>User changes structure while preserving meaning"]
+
+  TRANS --> TRANS_W["Writing"]
+  TRANS --> TRANS_S["Speaking"]
+
+  TRANS_W --> STQ["Statement to question<br/>Learner rewrites structure"]
+  TRANS_W --> F2I["Formal to informal rewrite<br/>Learner adjusts register"]
+
+  TRANS_S --> REPH["Rephrase prompt<br/>Learner expresses idea differently"]
+  TRANS_S --> VAR["Structured variation<br/>Learner adapts response to constraints"]
+
+  %% =========================
+  %% Verification
+  %% =========================
+
+  ROOT --> VER["Verification<br/>User evaluates correctness"]
+
+  VER --> VER_R["Reading"]
+  VER --> VER_L["Listening"]
+
+  VER_R --> TF_R["True or false comprehension<br/>Learner evaluates statements about text"]
+  VER_R --> ERR["Error detection<br/>Learner identifies incorrect grammar"]
+
+  VER_L --> TF_L["True or false after audio<br/>Learner evaluates statements about audio"]
+  VER_L --> SPOT["Spot incorrect statement<br/>Learner selects mismatch"]
+
+  %% =========================
+  %% Free Production
+  %% =========================
+
+  ROOT --> FREE["Free production<br/>User produces open-ended output"]
+
+  FREE --> FREE_W["Writing"]
+  FREE --> FREE_S["Speaking"]
+
+  FREE_W --> INTRO["Short introduction<br/>Learner writes structured text"]
+  FREE_W --> MSG["Functional message<br/>Learner writes practical message"]
+
+  FREE_S --> OPEN["Open response<br/>Learner responds freely"]
+  FREE_S --> ROLE["Role-play simulation<br/>Learner speaks in structured scenario"]
+
+  %% =========================
+  %% Pronunciation
+  %% =========================
+
+  ROOT --> PRON["Pronunciation scoring<br/>User reproduces spoken language"]
+
+  PRON --> PRON_S["Speaking"]
+
+  PRON_S --> REP["Repeat sentence<br/>Learner repeats for pronunciation evaluation"]
+  PRON_S --> SHAD["Shadowing<br/>Learner repeats audio in real time"]
+  PRON_S --> MIN["Minimal pair pronunciation<br/>Learner distinguishes similar sounds"]
