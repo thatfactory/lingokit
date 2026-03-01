@@ -14,10 +14,6 @@ let package = Package(
         .library(
             name: "LingoKit",
             targets: ["LingoKit"]
-        ),
-        .library(
-            name: "LingoKitIntentClassification",
-            targets: ["LingoKitIntentClassification"]
         )
     ],
     dependencies: [
@@ -25,19 +21,11 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "LingoKit",
-            dependencies: ["LingoKitIntentClassification"]
-        ),
-        .target(
-            name: "LingoKitIntentClassification"
+            name: "LingoKit"
         ),
         .testTarget(
             name: "LingoKitTests",
             dependencies: ["LingoKit"]
-        ),
-        .testTarget(
-            name: "LingoKitIntentClassificationTests",
-            dependencies: ["LingoKitIntentClassification"]
         )
     ]
 )

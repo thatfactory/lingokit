@@ -1,7 +1,7 @@
 import Testing
 @testable import LingoKit
 
-@Test func reExportsIntentClassificationModule() {
+@Test func exposesIntentClassificationFromSingleModule() {
     // Given
     let exercise = IntentClassificationExercise(
         prompt: "Wie heißen sie?",

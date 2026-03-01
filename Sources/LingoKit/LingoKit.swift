@@ -1,1 +1,1 @@
-@_exported import LingoKitIntentClassification
+import Foundation

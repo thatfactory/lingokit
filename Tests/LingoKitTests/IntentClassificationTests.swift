@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import LingoKitIntentClassification
+@testable import LingoKit
 
 private struct StubExercise: IntentClassificationExerciseType {
     let id: UUID

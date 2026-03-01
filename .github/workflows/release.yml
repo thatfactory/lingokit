@@ -50,21 +50,11 @@ jobs:
       - name: Generate DocC
         run: |
           set -euo pipefail
-          DERIVED_DATA=".build/DerivedData"
-          xcodebuild docbuild \
-            -scheme LingoKit \
-            -destination "generic/platform=iOS" \
-            -derivedDataPath "$DERIVED_DATA"
-
-          DOCC_ARCHIVE=$(find "$DERIVED_DATA" -path "*Build/Products/*/LingoKit.doccarchive" -print -quit)
-          if [ -z "${DOCC_ARCHIVE:-}" ]; then
-            echo "DocC archive not found in $DERIVED_DATA"
-            exit 1
-          fi
-
-          xcrun docc process-archive transform-for-static-hosting \
-            "$DOCC_ARCHIVE" \
+          swift package --allow-writing-to-directory ./public generate-documentation \
+            --target LingoKit \
+            --disable-indexing \
             --output-path ./public \
+            --transform-for-static-hosting \
             --hosting-base-path lingokit
 
           cat > ./public/index.html <<'INDEX'

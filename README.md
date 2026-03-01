@@ -20,6 +20,14 @@ This approach keeps UI and content flexible while making it easy to integrate we
 
 Each exercise engine can expose an `ExerciseType` taxonomy value so host apps can model generic flows while keeping evaluation logic in `LingoKit`.
 
+## Usage
+
+Import only `LingoKit` in client applications:
+
+```swift
+import LingoKit
+```
+
 ```mermaid
 flowchart TB
   subgraph HOST["Host App/Game"]
@@ -27,16 +35,14 @@ flowchart TB
   end
 
   subgraph LK[" "]
-    ALL["LingoKit"]
-    CORE["LingoKitCore"]
-
-    IC["LingoKitIntentClassification"]
-    CLOZE["LingoKitCloze"]
-    ORDER["LingoKitOrdering"]
-    TILES["LingoKitTileAssembly"]
-    FTXT["LingoKitFreeText"]
-    SPEECH["LingoKitSpeechScoring"]
-    ETC["..."]
+    ALL["LingoKit (single module)"]
+    IC["Intent Classification"]
+    CLOZE["Cloze"]
+    ORDER["Ordering"]
+    TILES["Tile Assembly"]
+    FTXT["Free Text"]
+    SPEECH["Speech Scoring"]
+    ETC["...more exercise engines"]
   end
 
   FLOW --> ALL
@@ -48,12 +54,4 @@ flowchart TB
   ALL --> FTXT
   ALL --> SPEECH
   ALL --> ETC
-
-  IC --> CORE
-  CLOZE --> CORE
-  ORDER --> CORE
-  TILES --> CORE
-  FTXT --> CORE
-  SPEECH --> CORE
-  ETC --> CORE
 ```

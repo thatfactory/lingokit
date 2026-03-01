@@ -19,6 +19,21 @@ This approach keeps UI and content flexible while making it easy to integrate we
 
 Use ``ExerciseType`` to tag exercise engines with a taxonomy category that host applications can store in their own state machines.
 
+## Usage
+
+```swift
+import LingoKit
+
+let exercise = IntentClassificationExercise(
+    prompt: "Wie heißen sie?",
+    intents: ["Name", "Age", "Address"],
+    expectedIntent: "Name",
+    feedback: "Correct."
+)
+
+let evaluation = exercise.evaluate(selectedIntent: "Name")
+```
+
 ## Topics
 
 ### Intent Classification
