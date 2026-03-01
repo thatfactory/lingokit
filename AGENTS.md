@@ -20,6 +20,6 @@ LingoKit should evolve as a collection of modular exercise engines (intent class
 - support future scoring extensions (time bonuses, streak multipliers, difficulty weighting) without breaking existing clients.
 
 ## Exercise Types
-- Refer to "Exercise Types.mmd" for a comprehensive overview of the various exercise types that LingoKit can provide.
+- Refer to "ExerciseTypes.mmd" for a comprehensive overview of the various exercise types that LingoKit can provide.
 - Note that this list is not final and may undergo changes or expansions over time.
 - Feel free to suggest changes to the list.
