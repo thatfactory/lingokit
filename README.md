@@ -20,32 +20,27 @@ This approach keeps UI and content flexible while making it easy to integrate we
 
 Each exercise engine can expose an `ExerciseType` taxonomy value so host apps can model generic flows while keeping evaluation logic in `LingoKit`.
 
-## Usage
-
-Import only `LingoKit` in client applications:
-
-```swift
-import LingoKit
-```
+## Structure
 
 ```mermaid
 flowchart TB
   subgraph HOST["Host App/Game"]
-    FLOW["ExerciseFlow"]
+    ACTIVITIES["LanguageActivities"]
   end
 
   subgraph LK[" "]
-    ALL["LingoKit (single module)"]
-    IC["Intent Classification"]
-    CLOZE["Cloze"]
-    ORDER["Ordering"]
-    TILES["Tile Assembly"]
-    FTXT["Free Text"]
-    SPEECH["Speech Scoring"]
-    ETC["...more exercise engines"]
+    ALL["LingoKit"]
+
+    IC["LingoKitIntentClassification"]
+    CLOZE["LingoKitCloze"]
+    ORDER["LingoKitOrdering"]
+    TILES["LingoKitTileAssembly"]
+    FTXT["LingoKitFreeText"]
+    SPEECH["LingoKitSpeechScoring"]
+    ETC["..."]
   end
 
-  FLOW --> ALL
+  ACTIVITIES --> ALL
 
   ALL --> IC
   ALL --> CLOZE
@@ -55,3 +50,36 @@ flowchart TB
   ALL --> SPEECH
   ALL --> ETC
 ```
+## Integration
+### Xcode
+Use Xcode's [built-in support for SPM](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app).
+
+*or...*
+
+### Package.swift
+In your `Package.swift`, add `LingoKit` as a dependency:
+```swift
+dependencies: [
+    .package(
+        url: "https://github.com/thatfactory/lingokit",
+        from: "0.1.0"
+    )
+]
+```
+
+Associate the dependency with your target:
+```swift
+targets: [
+    .target(
+        name: "YourTarget",
+        dependencies: [
+            .product(
+                name: "LingoKit",
+                package: "lingokit"
+            )
+        ]
+    )
+]
+```
+
+Run: `swift build`
