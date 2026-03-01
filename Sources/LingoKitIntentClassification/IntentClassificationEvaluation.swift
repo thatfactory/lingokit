@@ -1,7 +1,7 @@
 import Foundation
 
 /// Result of evaluating an intent-classification answer.
-public struct IntentClassificationEvaluation<Intent: Hashable & Codable & Sendable>: Codable, Sendable {
+public struct IntentClassificationEvaluation<Intent: Hashable & Codable & Sendable>: Codable, Sendable, Equatable {
     /// The intent selected by the user.
     public let selectedIntent: Intent
     /// The expected correct intent.

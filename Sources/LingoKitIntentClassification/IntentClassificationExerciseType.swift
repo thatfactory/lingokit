@@ -20,3 +20,10 @@ public protocol IntentClassificationExerciseType: Codable, Sendable {
     /// Optional feedback associated with this exercise.
     var feedback: String? { get }
 }
+
+public extension IntentClassificationExerciseType {
+    /// The taxonomy exercise type represented by this exercise protocol.
+    var exerciseType: ExerciseType {
+        .intentClassification
+    }
+}

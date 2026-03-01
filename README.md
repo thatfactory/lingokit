@@ -18,6 +18,8 @@ Instead of organizing by modality, `LingoKit` organizes by exercise type—such 
 
 This approach keeps UI and content flexible while making it easy to integrate well-defined challenges and receive consistent, comparable results.
 
+Each exercise engine can expose an `ExerciseType` taxonomy value so host apps can model generic flows while keeping evaluation logic in `LingoKit`.
+
 ```mermaid
 flowchart TB
   subgraph HOST["Host App/Game"]

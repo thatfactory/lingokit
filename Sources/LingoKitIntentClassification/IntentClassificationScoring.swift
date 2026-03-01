@@ -1,7 +1,7 @@
 import Foundation
 
 /// Scoring policy for intent-classification exercises.
-public struct IntentClassificationScoring: Codable, Sendable {
+public struct IntentClassificationScoring: Codable, Sendable, Equatable {
     /// Score awarded when the selected intent is correct.
     public let correctPoints: Int
     /// Score awarded when the selected intent is incorrect.

@@ -156,3 +156,30 @@ private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
     #expect(evaluation.selectedIntent == "Name")
     #expect(evaluation.feedback == "Richtig!")
 }
+
+@Test func exerciseAndEvaluationSupportEquatableComparison() {
+    // Given
+    let exercise = IntentClassificationExercise(
+        id: UUID(uuidString: "04D1C4F6-77D6-4BCE-A85D-225105951F4B")!,
+        prompt: "Wie heißen sie?",
+        intents: ["Name", "Age", "Address"],
+        expectedIntent: "Name",
+        feedback: "Richtig!"
+    )
+
+    // When
+    let matchingExercise = IntentClassificationExercise(
+        id: UUID(uuidString: "04D1C4F6-77D6-4BCE-A85D-225105951F4B")!,
+        prompt: "Wie heißen sie?",
+        intents: ["Name", "Age", "Address"],
+        expectedIntent: "Name",
+        feedback: "Richtig!"
+    )
+    let evaluationOne = exercise.evaluate(selectedIntent: "Name")
+    let evaluationTwo = exercise.evaluate(selectedIntent: "Name")
+
+    // Then
+    #expect(exercise == matchingExercise)
+    #expect(evaluationOne == evaluationTwo)
+    #expect(IntentClassificationScoring.standard == IntentClassificationScoring.standard)
+}

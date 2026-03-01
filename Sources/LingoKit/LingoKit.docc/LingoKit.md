@@ -17,6 +17,8 @@ Instead of organizing by modality, `LingoKit` organizes by exercise type—such 
 
 This approach keeps UI and content flexible while making it easy to integrate well-defined challenges and receive consistent, comparable results.
 
+Use ``ExerciseType`` to tag exercise engines with a taxonomy category that host applications can store in their own state machines.
+
 ## Topics
 
 ### Intent Classification
