@@ -2,7 +2,7 @@ import Foundation
 import Testing
 @testable import LingoKit
 
-private struct StubExercise: IntentClassificationExerciseType {
+private struct StubExercise: LKIntentClassificationExerciseType {
     let id: UUID
     let prompt: String
     let intents: [String]
@@ -10,11 +10,11 @@ private struct StubExercise: IntentClassificationExerciseType {
     let feedback: String?
 }
 
-private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
+private func evaluateViaProtocol<Exercise: LKIntentClassificationExerciseType>(
     exercise: Exercise,
     selectedIntent: Exercise.Intent
-) -> IntentClassificationEvaluation<Exercise.Intent> {
-    IntentClassificationEvaluator.evaluate(
+) -> LKIntentClassificationEvaluation<Exercise.Intent> {
+    LKIntentClassificationEvaluator.evaluate(
         exercise: exercise,
         selectedIntent: selectedIntent
     )
@@ -22,7 +22,7 @@ private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
 
 @Test func returnsCorrectEvaluationWithStandardScore() {
     // Given
-    let exercise = IntentClassificationExercise(
+    let exercise = LKIntentClassificationExercise(
         prompt: "Wie heißen sie?",
         intents: ["Name", "Age", "Address"],
         expectedIntent: "Name",
@@ -42,7 +42,7 @@ private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
 
 @Test func returnsIncorrectEvaluationWithStandardScore() {
     // Given
-    let exercise = IntentClassificationExercise(
+    let exercise = LKIntentClassificationExercise(
         prompt: "Wie heißen sie?",
         intents: ["Name", "Age", "Address"],
         expectedIntent: "Name"
@@ -60,12 +60,12 @@ private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
 
 @Test func supportsCustomScoringPolicy() {
     // Given
-    let exercise = IntentClassificationExercise(
+    let exercise = LKIntentClassificationExercise(
         prompt: "Wie heißen sie?",
         intents: ["Name", "Age", "Address"],
         expectedIntent: "Name"
     )
-    let scoring = IntentClassificationScoring(
+    let scoring = LKIntentClassificationScoring(
         correctPoints: 3,
         incorrectPoints: -1
     )
@@ -87,7 +87,7 @@ private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
 
 @Test func evaluatorAndExerciseApiProduceSameResult() {
     // Given
-    let exercise = IntentClassificationExercise(
+    let exercise = LKIntentClassificationExercise(
         prompt: "Wie heißen sie?",
         intents: ["Name", "Age", "Address"],
         expectedIntent: "Name"
@@ -95,7 +95,7 @@ private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
 
     // When
     let exerciseEvaluation = exercise.evaluate(selectedIntent: "Name")
-    let evaluatorEvaluation = IntentClassificationEvaluator.evaluate(
+    let evaluatorEvaluation = LKIntentClassificationEvaluator.evaluate(
         exercise: exercise,
         selectedIntent: "Name"
     )
@@ -109,7 +109,7 @@ private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
 
 @Test func protocolBasedAndConcreteEvaluatorProduceSameResult() {
     // Given
-    let exercise = IntentClassificationExercise(
+    let exercise = LKIntentClassificationExercise(
         id: UUID(uuidString: "D8E4D4FB-7D8B-4D6A-9F4B-4CF8A59543B1")!,
         prompt: "Wie heißen sie?",
         intents: ["Name", "Age", "Address"],
@@ -117,7 +117,7 @@ private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
     )
 
     // When
-    let concreteEvaluation = IntentClassificationEvaluator.evaluate(
+    let concreteEvaluation = LKIntentClassificationEvaluator.evaluate(
         exercise: exercise,
         selectedIntent: "Age"
     )
@@ -144,7 +144,7 @@ private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
     )
 
     // When
-    let evaluation = IntentClassificationEvaluator.evaluate(
+    let evaluation = LKIntentClassificationEvaluator.evaluate(
         exercise: exercise,
         selectedIntent: "Name"
     )
@@ -159,7 +159,7 @@ private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
 
 @Test func exerciseAndEvaluationSupportEquatableComparison() {
     // Given
-    let exercise = IntentClassificationExercise(
+    let exercise = LKIntentClassificationExercise(
         id: UUID(uuidString: "04D1C4F6-77D6-4BCE-A85D-225105951F4B")!,
         prompt: "Wie heißen sie?",
         intents: ["Name", "Age", "Address"],
@@ -168,7 +168,7 @@ private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
     )
 
     // When
-    let matchingExercise = IntentClassificationExercise(
+    let matchingExercise = LKIntentClassificationExercise(
         id: UUID(uuidString: "04D1C4F6-77D6-4BCE-A85D-225105951F4B")!,
         prompt: "Wie heißen sie?",
         intents: ["Name", "Age", "Address"],
@@ -181,5 +181,5 @@ private func evaluateViaProtocol<Exercise: IntentClassificationExerciseType>(
     // Then
     #expect(exercise == matchingExercise)
     #expect(evaluationOne == evaluationTwo)
-    #expect(IntentClassificationScoring.standard == IntentClassificationScoring.standard)
+    #expect(LKIntentClassificationScoring.standard == LKIntentClassificationScoring.standard)
 }

@@ -4,7 +4,7 @@ import Foundation
 ///
 /// Use this type to define the prompt, possible intents, expected intent,
 /// and optional feedback for a single exercise round.
-public struct IntentClassificationExercise<Intent: Hashable & Codable & Sendable>: IntentClassificationExerciseType, Equatable {
+public struct LKIntentClassificationExercise<Intent: Hashable & Codable & Sendable>: LKIntentClassificationExerciseType, Equatable {
     /// A unique identifier for the exercise instance.
     public let id: UUID
     /// The exercise prompt presented to the user.
@@ -46,9 +46,9 @@ public struct IntentClassificationExercise<Intent: Hashable & Codable & Sendable
     /// - Returns: The evaluation result containing correctness and score.
     public func evaluate(
         selectedIntent: Intent,
-        scoring: IntentClassificationScoring = .standard
-    ) -> IntentClassificationEvaluation<Intent> {
-        IntentClassificationEvaluator.evaluate(
+        scoring: LKIntentClassificationScoring = .standard
+    ) -> LKIntentClassificationEvaluation<Intent> {
+        LKIntentClassificationEvaluator.evaluate(
             exercise: self,
             selectedIntent: selectedIntent,
             scoring: scoring

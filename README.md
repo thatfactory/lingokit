@@ -18,7 +18,7 @@ Instead of organizing by modality, `LingoKit` organizes by exercise type—such 
 
 This approach keeps UI and content flexible while making it easy to integrate well-defined challenges and receive consistent, comparable results.
 
-Each exercise engine can expose an `ExerciseType` taxonomy value so host apps can model generic flows while keeping evaluation logic in `LingoKit`.
+Each exercise engine can expose an `LKExerciseType` taxonomy value so host apps can model generic flows while keeping evaluation logic in `LingoKit`.
 
 ## Structure
 
@@ -31,12 +31,12 @@ flowchart TB
   subgraph LK[" "]
     ALL["LingoKit"]
 
-    IC["LingoKitIntentClassification"]
-    CLOZE["LingoKitCloze"]
-    ORDER["LingoKitOrdering"]
-    TILES["LingoKitTileAssembly"]
-    FTXT["LingoKitFreeText"]
-    SPEECH["LingoKitSpeechScoring"]
+    IC["LKIntentClassification"]
+    CLOZE["LKCloze"]
+    ORDER["LKOrdering"]
+    TILES["LKTileAssembly"]
+    FTXT["LKFreeText"]
+    SPEECH["LKSpeechScoring"]
     ETC["..."]
   end
 
@@ -62,7 +62,7 @@ In your `Package.swift`, add `LingoKit` as a dependency:
 dependencies: [
     .package(
         url: "https://github.com/thatfactory/lingokit",
-        from: "0.1.0"
+        from: "0.5.0"
     )
 ]
 ```

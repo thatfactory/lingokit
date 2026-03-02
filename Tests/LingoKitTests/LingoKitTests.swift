@@ -3,7 +3,7 @@ import Testing
 
 @Test func exposesIntentClassificationFromSingleModule() {
     // Given
-    let exercise = IntentClassificationExercise(
+    let exercise = LKIntentClassificationExercise(
         prompt: "Wie heißen sie?",
         intents: ["Name", "Age", "Address"],
         expectedIntent: "Name"
@@ -19,7 +19,7 @@ import Testing
 
 @Test func exposesExerciseType() {
     // Given
-    let exercise = IntentClassificationExercise(
+    let exercise = LKIntentClassificationExercise(
         prompt: "Wie heißen sie?",
         intents: ["Name", "Age", "Address"],
         expectedIntent: "Name"

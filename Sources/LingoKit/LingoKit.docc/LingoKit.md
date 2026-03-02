@@ -17,14 +17,14 @@ Instead of organizing by modality, `LingoKit` organizes by exercise type—such 
 
 This approach keeps UI and content flexible while making it easy to integrate well-defined challenges and receive consistent, comparable results.
 
-Use ``ExerciseType`` to tag exercise engines with a taxonomy category that host applications can store in their own state machines.
+Use ``LKExerciseType`` to tag exercise engines with a taxonomy category that host applications can store in their own state machines.
 
 ## Usage
 
 ```swift
 import LingoKit
 
-let exercise = IntentClassificationExercise(
+let exercise = LKIntentClassificationExercise(
     prompt: "Wie heißen sie?",
     intents: ["Name", "Age", "Address"],
     expectedIntent: "Name",
@@ -40,4 +40,4 @@ let evaluation = exercise.evaluate(selectedIntent: "Name")
 
 Use this module to define a prompt, candidate intents, and the expected intent.
 Then evaluate a selected intent and receive a typed evaluation result with correctness and score.
-When host apps use custom catalog models, conform them to ``IntentClassificationExerciseType`` and evaluate them with ``IntentClassificationEvaluator``.
+When host apps use custom catalog models, conform them to ``LKIntentClassificationExerciseType`` and evaluate them with ``LKIntentClassificationEvaluator``.

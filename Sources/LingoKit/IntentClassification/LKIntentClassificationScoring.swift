@@ -1,7 +1,7 @@
 import Foundation
 
 /// Scoring policy for intent-classification exercises.
-public struct IntentClassificationScoring: Codable, Sendable, Equatable {
+public struct LKIntentClassificationScoring: Codable, Sendable, Equatable {
     /// Score awarded when the selected intent is correct.
     public let correctPoints: Int
     /// Score awarded when the selected intent is incorrect.
@@ -23,7 +23,7 @@ public struct IntentClassificationScoring: Codable, Sendable, Equatable {
     /// The default scoring policy used by evaluation.
     ///
     /// Correct answers award 10 points and incorrect answers award 0 points.
-    public static let standard = IntentClassificationScoring(
+    public static let standard = LKIntentClassificationScoring(
         correctPoints: 10,
         incorrectPoints: 0
     )

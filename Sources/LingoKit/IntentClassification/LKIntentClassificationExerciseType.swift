@@ -1,7 +1,7 @@
 import Foundation
 
 /// A protocol describing the data required to evaluate an intent-classification exercise.
-public protocol IntentClassificationExerciseType: Codable, Sendable {
+public protocol LKIntentClassificationExerciseType: Codable, Sendable {
     /// The type of intents available in this exercise.
     associatedtype Intent: Hashable & Codable & Sendable
 
@@ -21,9 +21,9 @@ public protocol IntentClassificationExerciseType: Codable, Sendable {
     var feedback: String? { get }
 }
 
-public extension IntentClassificationExerciseType {
+public extension LKIntentClassificationExerciseType {
     /// The taxonomy exercise type represented by this exercise protocol.
-    var exerciseType: ExerciseType {
+    var exerciseType: LKExerciseType {
         .intentClassification
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 
 /// Evaluates intent-classification exercises.
-public enum IntentClassificationEvaluator {
+public enum LKIntentClassificationEvaluator {
     /// Evaluates a selected intent against an exercise definition.
     ///
     /// - Parameters:
@@ -10,14 +10,14 @@ public enum IntentClassificationEvaluator {
     ///   - scoring: The scoring policy used for score calculation.
     /// - Returns: A result containing correctness, score, and feedback.
     public static func evaluate<Intent: Hashable & Codable & Sendable>(
-        exercise: IntentClassificationExercise<Intent>,
+        exercise: LKIntentClassificationExercise<Intent>,
         selectedIntent: Intent,
-        scoring: IntentClassificationScoring = .standard
-    ) -> IntentClassificationEvaluation<Intent> {
+        scoring: LKIntentClassificationScoring = .standard
+    ) -> LKIntentClassificationEvaluation<Intent> {
         let isCorrect = selectedIntent == exercise.expectedIntent
         let score = isCorrect ? scoring.correctPoints : scoring.incorrectPoints
 
-        return IntentClassificationEvaluation(
+        return LKIntentClassificationEvaluation(
             selectedIntent: selectedIntent,
             expectedIntent: exercise.expectedIntent,
             isCorrect: isCorrect,
@@ -33,16 +33,16 @@ public enum IntentClassificationEvaluator {
     ///   - selectedIntent: The intent selected by the user.
     ///   - scoring: The scoring policy used for score calculation.
     /// - Returns: A result containing correctness, score, and feedback.
-    public static func evaluate<Exercise: IntentClassificationExerciseType>(
+    public static func evaluate<Exercise: LKIntentClassificationExerciseType>(
         exercise: Exercise,
         selectedIntent: Exercise.Intent,
-        scoring: IntentClassificationScoring = .standard
-    ) -> IntentClassificationEvaluation<Exercise.Intent> {
+        scoring: LKIntentClassificationScoring = .standard
+    ) -> LKIntentClassificationEvaluation<Exercise.Intent> {
 
         let isCorrect = selectedIntent == exercise.expectedIntent
         let score = isCorrect ? scoring.correctPoints : scoring.incorrectPoints
 
-        return IntentClassificationEvaluation(
+        return LKIntentClassificationEvaluation(
             selectedIntent: selectedIntent,
             expectedIntent: exercise.expectedIntent,
             isCorrect: isCorrect,
