@@ -20,6 +20,11 @@ This approach keeps UI and content flexible while making it easy to integrate we
 
 Each exercise engine can expose an `LKExerciseType` taxonomy value so host apps can model generic flows while keeping evaluation logic in `LingoKit`.
 
+## Implemented Exercise Engines
+
+- `Intent classification` (`LKIntentClassificationExercise`): classify a prompt into one expected intent with deterministic scoring.
+- `Tile assembly` (`LKTileAssemblyExercise`): assemble constrained tiles into an exact expected sequence for writing construction.
+
 ## Structure
 
 ```mermaid
@@ -62,7 +67,7 @@ In your `Package.swift`, add `LingoKit` as a dependency:
 dependencies: [
     .package(
         url: "https://github.com/thatfactory/lingokit",
-        from: "0.5.0"
+        from: "0.6.0"
     )
 ]
 ```

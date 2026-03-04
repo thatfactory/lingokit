@@ -34,6 +34,18 @@ let exercise = LKIntentClassificationExercise(
 let evaluation = exercise.evaluate(selectedIntent: "Name")
 ```
 
+```swift
+let tileExercise = LKTileAssemblyExercise(
+    prompt: "Build the sentence.",
+    availableTiles: ["Wie", "heißen", "Sie", "?"],
+    expectedTiles: ["Wie", "heißen", "Sie", "?"]
+)
+
+let tileEvaluation = tileExercise.evaluate(
+    selectedTiles: ["Wie", "heißen", "Sie", "?"]
+)
+```
+
 ## Topics
 
 ### Intent Classification
@@ -41,3 +53,8 @@ let evaluation = exercise.evaluate(selectedIntent: "Name")
 Use this module to define a prompt, candidate intents, and the expected intent.
 Then evaluate a selected intent and receive a typed evaluation result with correctness and score.
 When host apps use custom catalog models, conform them to ``LKIntentClassificationExerciseType`` and evaluate them with ``LKIntentClassificationEvaluator``.
+
+### Construction
+
+Use tile assembly to define constrained writing construction exercises.
+Provide `availableTiles` and `expectedTiles`, then evaluate selected tiles via ``LKTileAssemblyExercise/evaluate(selectedTiles:scoring:)`` or ``LKTileAssemblyEvaluator``.

@@ -31,3 +31,18 @@ import Testing
     // Then
     #expect(exerciseType == .intentClassification)
 }
+
+@Test func exposesTileAssemblyExerciseType() {
+    // Given
+    let exercise = LKTileAssemblyExercise(
+        prompt: "Build the sentence.",
+        availableTiles: ["Wie", "heißen", "Sie", "?"],
+        expectedTiles: ["Wie", "heißen", "Sie", "?"]
+    )
+
+    // When
+    let exerciseType = exercise.exerciseType
+
+    // Then
+    #expect(exerciseType == .tileAssembly)
+}
