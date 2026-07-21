@@ -1,25 +1,42 @@
 # LingoKit
 
-## Package Description
-LingoKit is a Swift package that provides UI-agnostic domain logic for language-learning exercises.
-It defines exercise models, evaluation contracts, and scoring policies using pure Swift data types.
+## Context
 
-The package is organized by exercise type and exposed through a single umbrella import (`import LingoKit`).
+LingoKit is a UI-agnostic Swift package for reusable language-learning exercise models, evaluation contracts, and scoring policies. Read [README.md](README.md) and [ExerciseTypes.mmd](ExerciseTypes.mmd) before changing package scope or exercise taxonomy.
 
-## Purpose
-- Reuse exercise logic across clients without duplicating rules.
-- Keep evaluation deterministic, consistent, and easy to test.
-- Decouple app/game UI from exercise domain logic.
-- Provide simple default scoring while allowing client-level scoring customization.
+LingoKit must remain language-agnostic, deterministic, and independent from application UI, Redux, persistence, and product-specific content.
 
-## Intent
-LingoKit should evolve as a collection of modular exercise engines (intent classification, cloze, ordering, and more) that:
-- remain language-agnostic by default;
-- accept input and return outcomes (correctness, score, feedback) with no UI dependencies;
-- expose stable, minimal APIs that are straightforward to integrate and version;
-- support future scoring extensions (time bonuses, streak multipliers, difficulty weighting) without breaking existing clients.
+## Shared guidelines
 
-## Exercise Types
-- Refer to "ExerciseTypes.mmd" for a comprehensive overview of the various exercise types that LingoKit can provide.
-- Note that this list is not final and may undergo changes or expansions over time.
-- Feel free to suggest changes to the list.
+Read only the guides relevant to the task:
+
+- [Swift](AgentGuidelines/Guidelines/Swift/Swift.md)
+- [Swift style](AgentGuidelines/Guidelines/Swift/SwiftStyle.md)
+- [SwiftLint](AgentGuidelines/Guidelines/Swift/SwiftLint.md)
+- [Unit and integration testing](AgentGuidelines/Guidelines/Testing/UnitTesting.md)
+- [Documentation](AgentGuidelines/Guidelines/Documentation.md)
+- [Packages](AgentGuidelines/Guidelines/Packages.md)
+- [CI/CD](AgentGuidelines/Guidelines/CICD.md)
+- [Git repositories and SSH-first cloning](AgentGuidelines/Guidelines/Git/Repositories.md)
+- [GitHub pull requests](AgentGuidelines/Guidelines/GitHub/PullRequests.md)
+- [Xcode MCP](AgentGuidelines/Guidelines/Xcode/MCP.md)
+- [Xcode security audits](AgentGuidelines/Guidelines/Xcode/Security.md)
+
+Redux, SwiftUI, and application-localization guidance do not apply unless a future target explicitly adopts those concerns.
+
+## Physical folder map
+
+| Role | Physical folder |
+|---|---|
+| Package sources | `Sources/LingoKit/` |
+| Exercise implementations | `Sources/LingoKit/<ExerciseType>/` |
+| DocC catalog | `Sources/LingoKit/LingoKit.docc/` |
+| Unit tests | `Tests/LingoKitTests/` |
+
+## Package specialization
+
+- Organize public exercise engines by exercise type rather than learning modality.
+- Expose the package through the `LingoKit` product and umbrella import.
+- Keep scoring and evaluation deterministic and directly testable.
+- Prefer stable minimal APIs that allow host applications to supply content, context, UI, persistence, and progression policy.
+- Preserve compatibility deliberately when extending scoring with time, streak, or difficulty inputs.
