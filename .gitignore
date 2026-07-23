@@ -1,11 +1,3 @@
 .DS_Store
-/.build
-/Packages
-/*.xcodeproj
-*.xcworkspace
-xcuserdata/
-Package.resolved
-DerivedData/
-.swiftpm/configuration/registries.json
-.netrc
-/public-check/
+__pycache__/
+*.py[cod]
