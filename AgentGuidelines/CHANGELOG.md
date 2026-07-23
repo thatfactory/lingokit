@@ -2,6 +2,37 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.0.7] - 2026-07-23
+
+### Added
+
+- Shared logging ownership, subsystem, package emoji, message design, privacy, testing, and filtering guidance.
+- Logging pointers for application development, Swift packages, and consumer instruction templates.
+
+## [0.0.6] - 2026-07-22
+
+### Added
+
+- Generic Redux store contracts, state/action, service-boundary, projection, and middleware guidance.
+- Generic GitHub Actions workflow, self-hosted runner, build strategy, and failure-investigation guidance.
+- Shared documentation conventions and test-tag/mock guidance.
+
+## [0.0.5] - 2026-07-21
+
+### Added
+
+- Default DocC documentation and GitHub Pages publishing guidance for Swift packages.
+
+## [0.0.4] - 2026-07-21
+
+### Added
+
+- Development guidance for reusability-first design and checking the latest shared-guidelines version before project work.
+
+### Changed
+
+- Require an approved pull request before releasing `agent-guidelines` or any consumer package.
+
 ## [0.0.3] - 2026-07-21
 
 ### Added

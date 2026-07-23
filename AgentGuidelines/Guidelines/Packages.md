@@ -39,8 +39,13 @@ The common package baseline is Swift, Xcode, Platforms, License, and CI. Add opt
 - Do not add application Redux, navigation, persistence, or product policy to a generic package.
 - Keep public APIs minimal and stable. Prefer composing focused types over introducing umbrella abstractions before multiple consumers need them.
 - Declare platform and Swift toolchain requirements explicitly in `Package.swift`.
+- New Swift packages must start on the latest supported Swift language and toolchain version. Before adding a major package capability to an older package, plan and complete the required Swift/toolchain modernization first.
 - Put sources under `Sources/<Target>/` and tests under `Tests/<Target>Tests/`.
 - Keep resources in the target that owns them and use the package bundle for lookup.
+
+## Logging
+
+Packages own any diagnostics emitted by their implementation. Follow the shared [logging guide](Logging.md) for AppLogger usage, subsystem identity, package emoji prefixes, domain-owned categories, concise messages, privacy, and test coverage. A consuming application must not reproduce package-internal logs.
 
 ## Development workflow
 
@@ -51,6 +56,22 @@ The common package baseline is Swift, Xcode, Platforms, License, and CI. Add opt
 5. Integrate the package into a consumer locally only when consumer behavior must also be verified.
 6. Avoid committing consumer-specific workarounds into the package when the behavior belongs in the consumer.
 
+## DocC documentation
+
+DocC is the default documentation format for public Swift packages. Document public APIs with `///` DocC comments and keep package-level conceptual material in a DocC catalog when it needs more than declaration comments.
+
+Before adopting the DocC command, an existing package must be updated to the latest supported Swift toolchain and declare the Swift-DocC plugin dependency in `Package.swift` (for example, `.package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "<current-plugin-version>")`). New packages must declare this prerequisite from the beginning when they publish DocC.
+
+Packages that publish documentation must build and deploy their DocC site as part of the release workflow:
+
+1. Run tests before documentation generation.
+2. Generate static-hosting documentation with `swift package generate-documentation --target <Target> --disable-indexing --output-path ./public --transform-for-static-hosting --hosting-base-path <repository-name>`.
+3. Add a root redirect to `/<repository-name>/documentation/<target-lowercase>/`.
+4. Upload `./public` with `actions/upload-pages-artifact` and deploy it with `actions/deploy-pages`.
+5. Grant the workflow `pages: write` and `id-token: write` permissions and expose the deployed URL in the README through a DocC badge.
+
+The release job must publish documentation only after the release has been approved, merged, tagged, and published. Verify the generated site locally when practical and keep the README badge URL aligned with the repository's GitHub Pages site.
+
 ## Local integration
 
 - Use Xcode's local-package workflow or an explicit temporary local dependency while developing package and consumer changes together.
@@ -60,15 +81,18 @@ The common package baseline is Swift, Xcode, Platforms, License, and CI. Add opt
 
 ## Releases
 
+Never release a package directly from unreviewed changes. Every release change must first be submitted through a pull request, reviewed, and approved. This rule applies to `agent-guidelines` itself as well as every consumer package. Create and publish the release only after the PR has merged.
+
 For ThatFactory packages, “release a new version” means:
 
 1. Choose a semantic version appropriate to compatibility.
 2. Update public documentation and release notes.
 3. Run the declared CI/test workflow.
-4. Commit the release state.
-5. Create and push the matching Git tag.
-6. Create a GitHub release for that tag.
-7. Use real multiline release notes and backticks around technical names and versions.
+4. Open a pull request containing the release state and wait for approval.
+5. Merge the approved pull request.
+6. Create and push the matching Git tag.
+7. Create a GitHub release for that tag.
+8. Use real multiline release notes and backticks around technical names and versions.
 
 When using a CLI, pass multiline notes through a file so GitHub renders line breaks correctly.
 
