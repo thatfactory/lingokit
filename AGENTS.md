@@ -15,6 +15,7 @@ Read only the guides relevant to the task:
 - [SwiftLint](AgentGuidelines/Guidelines/Swift/SwiftLint.md)
 - [Unit and integration testing](AgentGuidelines/Guidelines/Testing/UnitTesting.md)
 - [Documentation](AgentGuidelines/Guidelines/Documentation.md)
+- [Logging](AgentGuidelines/Guidelines/Logging.md)
 - [Packages](AgentGuidelines/Guidelines/Packages.md)
 - [CI/CD](AgentGuidelines/Guidelines/CICD.md)
 - [Git repositories and SSH-first cloning](AgentGuidelines/Guidelines/Git/Repositories.md)
@@ -40,3 +41,4 @@ Redux, SwiftUI, and application-localization guidance do not apply unless a futu
 - Keep scoring and evaluation deterministic and directly testable.
 - Prefer stable minimal APIs that allow host applications to supply content, context, UI, persistence, and progression policy.
 - Preserve compatibility deliberately when extending scoring with time, streak, or difficulty inputs.
+- Use logging subsystem `com.thatfactory.lingokit`, category `evaluation`, and canonical package emoji `📚`.

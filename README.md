@@ -20,6 +20,12 @@ This approach keeps UI and content flexible while making it easy to integrate we
 
 Each exercise engine can expose an `LKExerciseType` taxonomy value so host apps can model generic flows while keeping evaluation logic in `LingoKit`.
 
+## Logging
+
+LingoKit logs concise evaluation outcomes through [AppLogger](https://github.com/thatfactory/applogger) with subsystem `com.thatfactory.lingokit` and category `evaluation`.
+
+Every package-owned line starts with `📚` and includes only the exercise type, correctness, and score. LingoKit does not log prompts, selected or expected answers, feedback, or client-specific context.
+
 ## Implemented Exercise Engines
 
 - `Intent classification` (`LKIntentClassificationExercise`): classify a prompt into one expected intent with deterministic scoring.
@@ -67,7 +73,7 @@ In your `Package.swift`, add `LingoKit` as a dependency:
 dependencies: [
     .package(
         url: "https://github.com/thatfactory/lingokit",
-        from: "0.6.1"
+        from: "0.6.2"
     )
 ]
 ```
