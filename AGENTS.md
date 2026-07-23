@@ -42,3 +42,6 @@ Redux, SwiftUI, and application-localization guidance do not apply unless a futu
 - Prefer stable minimal APIs that allow host applications to supply content, context, UI, persistence, and progression policy.
 - Preserve compatibility deliberately when extending scoring with time, streak, or difficulty inputs.
 - Use logging subsystem `com.thatfactory.lingokit`, category `evaluation`, and canonical package emoji `📚`.
+## Codex review scope
+
+For consumer pull requests, do not substantively review `AgentGuidelines/**` after exact tagged-tree provenance has been verified. Verify its `VERSION`, compare its tree with the matching central tag, and verify the required `.gitattributes` rule. If provenance does not match exactly, review the subtree contents and stop the merge. Report substantive guideline feedback against the central `agent-guidelines` pull request.
