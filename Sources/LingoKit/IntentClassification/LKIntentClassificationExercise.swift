@@ -40,6 +40,8 @@ public struct LKIntentClassificationExercise<Intent: Hashable & Codable & Sendab
 
     /// Evaluates a selected intent and returns the scoring result.
     ///
+    /// This call emits one `📚` debug log containing only the exercise type, correctness, and score.
+    ///
     /// - Parameters:
     ///   - selectedIntent: The intent selected by the user.
     ///   - scoring: The scoring policy used to compute the final score.

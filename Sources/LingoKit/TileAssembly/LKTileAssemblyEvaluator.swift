@@ -1,6 +1,8 @@
 import Foundation
 
 /// Evaluates tile-assembly exercises.
+///
+/// Each evaluation emits one `📚` debug log containing only the exercise type, correctness, and score.
 public enum LKTileAssemblyEvaluator {
     /// Evaluates a selected tile sequence against an exercise definition.
     ///
@@ -14,15 +16,11 @@ public enum LKTileAssemblyEvaluator {
         selectedTiles: [Tile],
         scoring: LKTileAssemblyScoring = .standard
     ) -> LKTileAssemblyEvaluation<Tile> {
-        let isCorrect = selectedTiles == exercise.expectedTiles
-        let score = isCorrect ? scoring.correctPoints : scoring.incorrectPoints
-
-        return LKTileAssemblyEvaluation(
+        makeEvaluation(
             selectedTiles: selectedTiles,
             expectedTiles: exercise.expectedTiles,
-            isCorrect: isCorrect,
-            score: score,
-            feedback: exercise.feedback
+            feedback: exercise.feedback,
+            scoring: scoring
         )
     }
 
@@ -38,16 +36,39 @@ public enum LKTileAssemblyEvaluator {
         selectedTiles: [Exercise.Tile],
         scoring: LKTileAssemblyScoring = .standard
     ) -> LKTileAssemblyEvaluation<Exercise.Tile> {
-
-        let isCorrect = selectedTiles == exercise.expectedTiles
-        let score = isCorrect ? scoring.correctPoints : scoring.incorrectPoints
-
-        return LKTileAssemblyEvaluation(
+        makeEvaluation(
             selectedTiles: selectedTiles,
             expectedTiles: exercise.expectedTiles,
+            feedback: exercise.feedback,
+            scoring: scoring
+        )
+    }
+}
+
+// MARK: - Private
+
+private extension LKTileAssemblyEvaluator {
+    static func makeEvaluation<Tile: Hashable & Codable & Sendable>(
+        selectedTiles: [Tile],
+        expectedTiles: [Tile],
+        feedback: String?,
+        scoring: LKTileAssemblyScoring
+    ) -> LKTileAssemblyEvaluation<Tile> {
+        let isCorrect = selectedTiles == expectedTiles
+        let score = isCorrect ? scoring.correctPoints : scoring.incorrectPoints
+
+        let evaluation = LKTileAssemblyEvaluation(
+            selectedTiles: selectedTiles,
+            expectedTiles: expectedTiles,
             isCorrect: isCorrect,
             score: score,
-            feedback: exercise.feedback
+            feedback: feedback
         )
+        LKLogging.logEvaluation(
+            exerciseType: .tileAssembly,
+            isCorrect: evaluation.isCorrect,
+            score: evaluation.score
+        )
+        return evaluation
     }
 }

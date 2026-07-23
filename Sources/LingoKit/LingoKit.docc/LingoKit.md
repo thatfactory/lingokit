@@ -19,6 +19,10 @@ This approach keeps UI and content flexible while making it easy to integrate we
 
 Use ``LKExerciseType`` to tag exercise engines with a taxonomy category that host applications can store in their own state machines.
 
+## Logging
+
+LingoKit emits concise evaluation outcomes through [AppLogger](https://github.com/thatfactory/applogger) with subsystem `com.thatfactory.lingokit` and category `evaluation`. Each package-owned message starts with `📚` and contains the exercise type, correctness, and score without including prompts, answers, feedback, or client-specific context.
+
 ## Usage
 
 ```swift
