@@ -70,6 +70,7 @@ private func expectDebug(
     }
 }
 
+/// Records LingoKit log entries emitted during a test.
 private final class LKLogRecorder: @unchecked Sendable {
     private var internalEntries: [LKRecordedLog] = []
     private let lock = NSLock()
