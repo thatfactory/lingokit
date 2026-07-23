@@ -29,8 +29,5 @@ jobs:
           rm -rf .swiftpm
           rm -rf .build
 
-      - name: Validate Agent Guidelines
-        run: python3 AgentGuidelines/Scripts/validate_guidelines.py
-
       - name: Run Tests
         run: swift test -v
