@@ -8,15 +8,17 @@ Describe the product or package, supported platforms, and durable constraints. L
 
 Read only the guides relevant to the task:
 
+- [Agent workflow](AgentGuidelines/Guidelines/AgentWorkflow.md)
 - [Swift](AgentGuidelines/Guidelines/Swift/Swift.md)
 - [Swift style](AgentGuidelines/Guidelines/Swift/SwiftStyle.md)
 - [SwiftUI](AgentGuidelines/Guidelines/Swift/SwiftUI.md)
-- [SwiftLint](AgentGuidelines/Guidelines/Swift/SwiftLint.md)
+- [Swift format](AgentGuidelines/Guidelines/Swift/SwiftFormat.md)
 - [Localization](AgentGuidelines/Guidelines/Swift/Localization.md)
 - [Unit and integration testing](AgentGuidelines/Guidelines/Testing/UnitTesting.md)
 - [Documentation](AgentGuidelines/Guidelines/Documentation.md)
 - [Logging](AgentGuidelines/Guidelines/Logging.md)
 - [Packages](AgentGuidelines/Guidelines/Packages.md)
+- [Development workflow](AgentGuidelines/Guidelines/Development.md)
 - [CI/CD](AgentGuidelines/Guidelines/CICD.md)
 - [Git repositories and SSH-first cloning](AgentGuidelines/Guidelines/Git/Repositories.md)
 - [GitHub pull requests](AgentGuidelines/Guidelines/GitHub/PullRequests.md)
@@ -46,6 +48,10 @@ Replace these examples with exact repository paths:
 | Views | `<AppName>/View/` |
 | Services | `<AppName>/Services/` |
 | Unit tests | `<AppName>Tests/` |
+
+## Stack
+
+Record the supported Xcode, Swift, and platform versions. State strict-concurrency mode, default actor isolation, infer-isolated-conformance behavior, and `nonisolated(nonsending)` defaults when they apply. Clarify whether application, package, and test targets share those settings.
 
 ## Local specialization
 

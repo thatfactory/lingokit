@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import importlib.util
+import json
+import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 VALIDATOR_PATH = Path(__file__).resolve().parents[1] / "Scripts" / "validate_guidelines.py"
@@ -46,6 +49,79 @@ class SemanticVersionTests(unittest.TestCase):
         for version in versions:
             with self.subTest(version=version):
                 self.assertIsNone(VALIDATOR.SEMVER.fullmatch(version))
+
+
+class SwiftFormattingConfigurationTests(unittest.TestCase):
+    """Verifies the shared Swift formatting contract."""
+
+    def test_swift_format_configuration(self) -> None:
+        """Accepts the exhaustive Xcode-aligned swift-format configuration."""
+        errors: list[str] = []
+
+        VALIDATOR.validate_swift_format_configuration(errors)
+
+        self.assertEqual(errors, [])
+
+    def test_swift_format_configuration_rejects_undocumented_rule_change(self) -> None:
+        """Rejects a changed rule value even when the exhaustive key set is unchanged."""
+        configuration = json.loads(
+            VALIDATOR.SWIFT_FORMAT_CONFIGURATION.read_text(encoding="utf-8")
+        )
+        configuration["rules"]["NeverForceUnwrap"] = True
+
+        with tempfile.TemporaryDirectory(dir=VALIDATOR.ROOT) as directory:
+            path = Path(directory) / ".swift-format"
+            path.write_text(json.dumps(configuration), encoding="utf-8")
+            errors: list[str] = []
+
+            with mock.patch.object(VALIDATOR, "SWIFT_FORMAT_CONFIGURATION", path):
+                VALIDATOR.validate_swift_format_configuration(errors)
+
+        self.assertTrue(
+            any("NeverForceUnwrap must be False, found True" in error for error in errors)
+        )
+
+    def test_swift_format_configuration_requires_conditional_import_sorting(self) -> None:
+        """Rejects disabling conditional import sorting."""
+        configuration = json.loads(
+            VALIDATOR.SWIFT_FORMAT_CONFIGURATION.read_text(encoding="utf-8")
+        )
+        configuration["orderedImports"]["includeConditionalImports"] = False
+
+        with tempfile.TemporaryDirectory(dir=VALIDATOR.ROOT) as directory:
+            path = Path(directory) / ".swift-format"
+            path.write_text(json.dumps(configuration), encoding="utf-8")
+            errors: list[str] = []
+
+            with mock.patch.object(VALIDATOR, "SWIFT_FORMAT_CONFIGURATION", path):
+                VALIDATOR.validate_swift_format_configuration(errors)
+
+        self.assertTrue(
+            any(
+                "orderedImports.includeConditionalImports must be True" in error
+                for error in errors
+            )
+        )
+
+    def test_editor_configuration(self) -> None:
+        """Accepts the shared Swift EditorConfig values."""
+        errors: list[str] = []
+
+        VALIDATOR.validate_editor_configuration(errors)
+
+        self.assertEqual(errors, [])
+
+
+class AgentGuidelinesAuditSkillTests(unittest.TestCase):
+    """Verifies the mandatory completion-audit skill contract."""
+
+    def test_audit_skill_contract(self) -> None:
+        """Accepts the skill, Development rule, and consumer template."""
+        errors: list[str] = []
+
+        VALIDATOR.validate_audit_skill(errors)
+
+        self.assertEqual(errors, [])
 
 
 if __name__ == "__main__":
