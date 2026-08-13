@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+import json
+import os
 import re
 import sys
 from pathlib import Path, PurePosixPath
@@ -12,6 +14,57 @@ ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
 VERSION = ROOT / "VERSION"
 CHANGELOG = ROOT / "CHANGELOG.md"
+SWIFT_FORMAT_CONFIGURATION = ROOT / "Configurations" / "Swift" / ".swift-format"
+EDITOR_CONFIGURATION = ROOT / "Configurations" / "Swift" / ".editorconfig"
+SWIFT_FORMAT_SCRIPT = ROOT / "Scripts" / "swift_format.sh"
+AUDIT_SKILL = ROOT / ".agents" / "skills" / "agent-guidelines-audit" / "SKILL.md"
+DEVELOPMENT_GUIDELINE = ROOT / "Guidelines" / "Development.md"
+AGENTS_TEMPLATE = ROOT / "Templates" / "AGENTS.md"
+EXPECTED_SWIFT_FORMAT_RULES = {
+    "AllPublicDeclarationsHaveDocumentation": False,
+    "AlwaysUseLiteralForEmptyCollectionInit": True,
+    "AlwaysUseLowerCamelCase": True,
+    "AmbiguousTrailingClosureOverload": True,
+    "AvoidRetroactiveConformances": True,
+    "BeginDocumentationCommentWithOneLineSummary": False,
+    "DoNotUseSemicolons": True,
+    "DontRepeatTypeInStaticProperties": True,
+    "FileScopedDeclarationPrivacy": True,
+    "FullyIndirectEnum": True,
+    "GroupNumericLiterals": True,
+    "IdentifiersMustBeASCII": True,
+    "NeverForceUnwrap": False,
+    "NeverUseForceTry": True,
+    "NeverUseImplicitlyUnwrappedOptionals": False,
+    "NoAccessLevelOnExtensionDeclaration": True,
+    "NoAssignmentInExpressions": True,
+    "NoBlockComments": True,
+    "NoCasesWithOnlyFallthrough": True,
+    "NoEmptyLinesOpeningClosingBraces": True,
+    "NoEmptyTrailingClosureParentheses": True,
+    "NoLabelsInCasePatterns": True,
+    "NoLeadingUnderscores": False,
+    "NoParensAroundConditions": True,
+    "NoPlaygroundLiterals": True,
+    "NoVoidReturnOnFunctionSignature": True,
+    "OmitExplicitReturns": False,
+    "OneCasePerLine": True,
+    "OneVariableDeclarationPerLine": True,
+    "OnlyOneTrailingClosureArgument": True,
+    "OrderedImports": True,
+    "ReplaceForEachWithForLoop": True,
+    "ReturnVoidInsteadOfEmptyTuple": True,
+    "TypeNamesShouldBeCapitalized": True,
+    "UseEarlyExits": False,
+    "UseExplicitNilCheckInConditions": True,
+    "UseLetInEveryBoundCaseVariable": True,
+    "UseShorthandTypeNames": True,
+    "UseSingleLinePropertyGetter": True,
+    "UseSynthesizedInitializer": True,
+    "UseTripleSlashForDocumentationComments": True,
+    "UseWhereClausesInForLoops": True,
+    "ValidateDocumentationComments": True,
+}
 
 MARKDOWN_LINK = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 SEMVER = re.compile(
@@ -31,9 +84,14 @@ FORBIDDEN = {
 
 
 def text_files() -> list[Path]:
-    suffixes = {".md", ".py", ".yml", ".yaml", ".txt"}
+    suffixes = {".md", ".py", ".swift", ".yml", ".yaml", ".txt"}
     files = [path for path in ROOT.rglob("*") if path.is_file() and path.suffix in suffixes]
     files.extend(path for path in (ROOT / "VERSION", ROOT / "LICENSE") if path.is_file())
+    files.extend(
+        path
+        for path in (SWIFT_FORMAT_CONFIGURATION, EDITOR_CONFIGURATION)
+        if path.is_file()
+    )
     return sorted(set(files))
 
 
@@ -87,6 +145,9 @@ def validate_readme_contract(errors: list[str]) -> None:
         "git subtree add": "subtree installation command",
         "git subtree pull": "subtree update command",
         "AgentGuidelines/** linguist-generated": "generated subtree attribute",
+        "AgentGuidelines/Configurations/Swift/.swift-format": "swift-format symlink command",
+        "AgentGuidelines/Configurations/Swift/.editorconfig": "EditorConfig symlink command",
+        ".agents/skills/agent-guidelines-audit": "completion-audit skill setup",
     }
     for value, description in required.items():
         if value not in readme:
@@ -102,6 +163,128 @@ def validate_public_content(errors: list[str]) -> None:
                 errors.append(f"{relative}: contains {description}: {forbidden!r}")
 
 
+def validate_swift_format_configuration(errors: list[str]) -> None:
+    try:
+        configuration = json.loads(SWIFT_FORMAT_CONFIGURATION.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        errors.append(f"{SWIFT_FORMAT_CONFIGURATION.relative_to(ROOT)}: invalid JSON: {error}")
+        return
+
+    expected_values = {
+        "indentation": {"spaces": 4},
+        "indentSwitchCaseLabels": False,
+        "lineLength": 120,
+        "tabWidth": 4,
+        "version": 1,
+    }
+    for key, expected in expected_values.items():
+        actual = configuration.get(key)
+        if actual != expected:
+            errors.append(
+                f"{SWIFT_FORMAT_CONFIGURATION.relative_to(ROOT)}: "
+                f"{key} must be {expected!r}, found {actual!r}"
+            )
+
+    include_conditional_imports = configuration.get("orderedImports", {}).get(
+        "includeConditionalImports"
+    )
+    if include_conditional_imports is not True:
+        errors.append(
+            f"{SWIFT_FORMAT_CONFIGURATION.relative_to(ROOT)}: "
+            "orderedImports.includeConditionalImports must be True, "
+            f"found {include_conditional_imports!r}"
+        )
+
+    rules = configuration.get("rules")
+    if not isinstance(rules, dict) or not rules:
+        errors.append(
+            f"{SWIFT_FORMAT_CONFIGURATION.relative_to(ROOT)}: "
+            "rules must be an exhaustive non-empty object"
+        )
+    else:
+        missing = sorted(set(EXPECTED_SWIFT_FORMAT_RULES) - set(rules))
+        unexpected = sorted(set(rules) - set(EXPECTED_SWIFT_FORMAT_RULES))
+        if missing or unexpected:
+            errors.append(
+                f"{SWIFT_FORMAT_CONFIGURATION.relative_to(ROOT)}: "
+                f"rule map mismatch; missing={missing!r}, unexpected={unexpected!r}"
+            )
+        for rule in sorted(set(rules) & set(EXPECTED_SWIFT_FORMAT_RULES)):
+            expected = EXPECTED_SWIFT_FORMAT_RULES[rule]
+            actual = rules[rule]
+            if actual != expected:
+                errors.append(
+                    f"{SWIFT_FORMAT_CONFIGURATION.relative_to(ROOT)}: "
+                    f"{rule} must be {expected!r}, found {actual!r}"
+                )
+
+
+def validate_editor_configuration(errors: list[str]) -> None:
+    try:
+        contents = EDITOR_CONFIGURATION.read_text(encoding="utf-8")
+    except OSError as error:
+        errors.append(
+            f"{EDITOR_CONFIGURATION.relative_to(ROOT)}: cannot read configuration: {error}"
+        )
+        return
+    required = {
+        "root = true",
+        "[*.swift]",
+        "indent_style = space",
+        "indent_size = 4",
+        "tab_width = 4",
+        "max_line_length = 120",
+        "end_of_line = lf",
+        "insert_final_newline = true",
+        "trim_trailing_whitespace = true",
+    }
+    for value in sorted(required):
+        if value not in contents:
+            errors.append(
+                f"{EDITOR_CONFIGURATION.relative_to(ROOT)}: missing {value!r}"
+            )
+
+
+def validate_swift_format_script(errors: list[str]) -> None:
+    if not SWIFT_FORMAT_SCRIPT.is_file():
+        errors.append(f"{SWIFT_FORMAT_SCRIPT.relative_to(ROOT)}: missing script")
+    elif not os.access(SWIFT_FORMAT_SCRIPT, os.X_OK):
+        errors.append(f"{SWIFT_FORMAT_SCRIPT.relative_to(ROOT)}: script is not executable")
+
+
+def validate_audit_skill(errors: list[str]) -> None:
+    if not AUDIT_SKILL.is_file():
+        errors.append(f"{AUDIT_SKILL.relative_to(ROOT)}: missing audit skill")
+        return
+
+    skill = AUDIT_SKILL.read_text(encoding="utf-8")
+    required_skill_values = {
+        "name: agent-guidelines-audit": "skill name",
+        "before claiming completion": "completion trigger",
+        "git diff --check": "diff validation",
+    }
+    for value, description in required_skill_values.items():
+        if value not in skill:
+            errors.append(
+                f"{AUDIT_SKILL.relative_to(ROOT)}: missing {description}: {value!r}"
+            )
+
+    development = DEVELOPMENT_GUIDELINE.read_text(encoding="utf-8")
+    if "$agent-guidelines-audit" not in development:
+        errors.append(
+            f"{DEVELOPMENT_GUIDELINE.relative_to(ROOT)}: "
+            "missing mandatory $agent-guidelines-audit invocation"
+        )
+
+    agents_template = AGENTS_TEMPLATE.read_text(encoding="utf-8")
+    if "AgentGuidelines/Guidelines/Development.md" not in agents_template:
+        errors.append(
+            f"{AGENTS_TEMPLATE.relative_to(ROOT)}: missing Development.md pointer"
+        )
+    if "## Stack" not in agents_template:
+        errors.append(f"{AGENTS_TEMPLATE.relative_to(ROOT)}: missing Stack section")
+
+
 def main() -> int:
     errors: list[str] = []
     validate_links(errors)
@@ -109,6 +292,10 @@ def main() -> int:
     validate_version(errors)
     validate_readme_contract(errors)
     validate_public_content(errors)
+    validate_swift_format_configuration(errors)
+    validate_editor_configuration(errors)
+    validate_swift_format_script(errors)
+    validate_audit_skill(errors)
 
     if errors:
         print("Guideline validation failed:")
