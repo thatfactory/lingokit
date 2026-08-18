@@ -1,12 +1,12 @@
 <p align="center">
   <a href="https://developer.apple.com/swift/"><img alt="Swift" src="https://img.shields.io/badge/Swift-6.4-ea7a50.svg?logo=swift&logoColor=white"></a>
   <a href="https://developer.apple.com/xcode/"><img alt="Xcode" src="https://img.shields.io/badge/Xcode-27-50ace8.svg?logo=xcode&logoColor=white"></a>
-  <a href="https://en.wikipedia.org/wiki/List_of_Apple_operating_systems"><img alt="Platforms" src="https://img.shields.io/badge/anyAppleOS-26%2B-lightgrey.svg?logo=apple&logoColor=white"></a>
-  <a href="https://developer.apple.com/documentation/xcode/swift-packages"><img alt="SPM" src="https://img.shields.io/badge/SPM-ready-b68f6a.svg?logo=gitlfs&logoColor=white"></a>
-  <a href="https://thatfactory.github.io/lingokit/documentation/lingokit/"><img alt="DocC" src="https://img.shields.io/badge/DocC-documentation-0288D1.svg?logo=bookstack&logoColor=white"></a>
+  <a href="https://en.wikipedia.org/wiki/List_of_Apple_operating_systems"><img alt="Apple platforms" src="https://img.shields.io/badge/Apple%20platforms-26%2B-lightgrey.svg?logo=apple&logoColor=white"></a>
+  <a href="https://developer.apple.com/documentation/xcode/swift-packages"><img alt="Swift Package Manager" src="https://img.shields.io/badge/SPM-ready-b68f6a.svg?logo=gitlfs&logoColor=white"></a>
   <a href="https://en.wikipedia.org/wiki/MIT_License"><img alt="License" src="https://img.shields.io/badge/License-MIT-67ac5b.svg?logo=googledocs&logoColor=white"></a>
   <a href="https://github.com/thatfactory/lingokit/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/thatfactory/lingokit/actions/workflows/ci.yml/badge.svg"></a>
   <a href="https://github.com/thatfactory/lingokit/actions/workflows/release.yml"><img alt="Release" src="https://github.com/thatfactory/lingokit/actions/workflows/release.yml/badge.svg"></a>
+  <a href="https://thatfactory.github.io/lingokit/documentation/lingokit/"><img alt="DocC documentation" src="https://img.shields.io/badge/DocC-documentation-0288D1.svg?logo=bookstack&logoColor=white"></a>
 </p>
 
 # LingoKit
@@ -94,3 +94,16 @@ targets: [
 ```
 
 Run: `swift build`
+
+## Development
+
+Format and lint the package sources before running the tests:
+
+```sh
+AgentGuidelines/Scripts/swift_format.sh format-and-lint \
+  Package.swift \
+  Sources \
+  Tests
+
+swift test
+```
