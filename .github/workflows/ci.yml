@@ -12,6 +12,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  swift-format:
+    name: Swift Format
+    runs-on: [self-hosted, macOS]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          clean: true
+
+      - name: Run strict swift-format lint
+        run: |
+          AgentGuidelines/Scripts/swift_format.sh lint-strict \
+            Package.swift \
+            Sources \
+            Tests
+
   test:
     name: Test
     runs-on: [self-hosted, macOS]

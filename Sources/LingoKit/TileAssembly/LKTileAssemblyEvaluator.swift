@@ -47,8 +47,8 @@ public enum LKTileAssemblyEvaluator {
 
 // MARK: - Private
 
-private extension LKTileAssemblyEvaluator {
-    static func makeEvaluation<Tile: Hashable & Codable & Sendable>(
+extension LKTileAssemblyEvaluator {
+    fileprivate static func makeEvaluation<Tile: Hashable & Codable & Sendable>(
         selectedTiles: [Tile],
         expectedTiles: [Tile],
         feedback: String?,

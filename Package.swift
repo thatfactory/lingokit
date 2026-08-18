@@ -8,7 +8,7 @@ let package = Package(
         .iOS(.v26),
         .macOS(.v26),
         .tvOS(.v26),
-        .watchOS(.v26)
+        .watchOS(.v26),
     ],
     products: [
         .library(
@@ -18,7 +18,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/thatfactory/applogger", from: "1.1.0"),
-        .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.4.5")
+        .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.4.5"),
     ],
     targets: [
         .target(
@@ -37,8 +37,8 @@ let package = Package(
                 .product(
                     name: "AppLogger",
                     package: "applogger"
-                )
+                ),
             ]
-        )
+        ),
     ]
 )
