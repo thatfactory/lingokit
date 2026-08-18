@@ -21,9 +21,9 @@ public protocol LKTileAssemblyExerciseType: Codable, Sendable {
     var feedback: String? { get }
 }
 
-public extension LKTileAssemblyExerciseType {
+extension LKTileAssemblyExerciseType {
     /// The taxonomy exercise type represented by this exercise protocol.
-    var exerciseType: LKExerciseType {
+    public var exerciseType: LKExerciseType {
         .tileAssembly
     }
 }

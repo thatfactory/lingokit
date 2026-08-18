@@ -47,8 +47,8 @@ public enum LKIntentClassificationEvaluator {
 
 // MARK: - Private
 
-private extension LKIntentClassificationEvaluator {
-    static func makeEvaluation<Intent: Hashable & Codable & Sendable>(
+extension LKIntentClassificationEvaluator {
+    fileprivate static func makeEvaluation<Intent: Hashable & Codable & Sendable>(
         selectedIntent: Intent,
         expectedIntent: Intent,
         feedback: String?,

@@ -1,4 +1,5 @@
 import Testing
+
 @testable import LingoKit
 
 @Test func exposesIntentClassificationFromSingleModule() {

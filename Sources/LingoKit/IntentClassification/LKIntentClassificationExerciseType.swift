@@ -21,9 +21,9 @@ public protocol LKIntentClassificationExerciseType: Codable, Sendable {
     var feedback: String? { get }
 }
 
-public extension LKIntentClassificationExerciseType {
+extension LKIntentClassificationExerciseType {
     /// The taxonomy exercise type represented by this exercise protocol.
-    var exerciseType: LKExerciseType {
+    public var exerciseType: LKExerciseType {
         .intentClassification
     }
 }
