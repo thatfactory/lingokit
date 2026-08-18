@@ -73,7 +73,7 @@ In your `Package.swift`, add `LingoKit` as a dependency:
 dependencies: [
     .package(
         url: "https://github.com/thatfactory/lingokit",
-        from: "0.6.3"
+        from: "0.6.4"
     )
 ]
 ```
