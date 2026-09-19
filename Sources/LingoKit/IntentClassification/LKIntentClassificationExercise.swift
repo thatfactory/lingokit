@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /// A UI-agnostic intent-classification exercise definition.
 ///

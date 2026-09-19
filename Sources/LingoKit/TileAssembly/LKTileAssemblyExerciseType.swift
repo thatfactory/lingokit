@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /// A protocol describing the data required to evaluate a tile-assembly exercise.
 public protocol LKTileAssemblyExerciseType: Codable, Sendable {

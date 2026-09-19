@@ -2,6 +2,142 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.0.33] - 2026-09-19
+
+### Added
+
+- Added a Swift Package compiler-settings baseline aligned with the applicable Xcode project warning, Swift language-mode, concurrency, and upcoming-feature policies.
+- Added completion-audit enforcement for compiler settings in checked-in Swift packages.
+
+### Changed
+
+- Required future Xcode compiler-policy changes to evaluate and update Swift Package Manager parity when an equivalent package setting is applicable.
+
+## [0.0.32] - 2026-09-13
+
+### Changed
+
+- Made runtime observability an explicit consumer contract for changed stateful, asynchronous, fallible, and lifecycle behavior, while preserving silence for pure values and utilities without meaningful diagnostic boundaries.
+- Extended the completion audit to require useful privacy-safe AppLogger outcome coverage instead of accepting dependency declaration and target linkage alone.
+
+## [0.0.31] - 2026-09-13
+
+### Added
+
+- Added a least-privilege GitHub App authentication pattern for workflows that resolve private sibling repositories, including short-lived read-only tokens, process-scoped Git configuration, exact repository selection, and fork pull-request and self-hosted-runner security boundaries.
+
+## [0.0.30] - 2026-09-12
+
+### Changed
+
+- Prohibited dedicated License headings and conventional standalone license-description paragraphs in Swift package READMEs while retaining root license files and standard license badges.
+
+## [0.0.29] - 2026-09-12
+
+### Added
+
+- Added a reusable `.gitignore` template for Xcode, Swift Package Manager, and supported development tooling, plus shared guidance for reviewed project-specific exceptions.
+
+### Changed
+
+- Extended the completion audit to reconcile consumer `.gitignore` files with the shared template and escalate undocumented extra patterns for a repository-owner decision.
+- Prohibited CocoaPods and Carthage under the external-dependency policy, and prohibited fastlane under CI/CD guidance while requiring first-party Swift or ThatFactory delivery tooling and narrowing Python or shell automation to documented Swift capability gaps.
+
+## [0.0.28] - 2026-09-09
+
+### Added
+
+- Added a shared version-controlled App Store metadata and app-store-connect-mcp synchronization workflow, including scoped planning, immutable application, reconciliation, screenshot, credential, and submission boundaries.
+- Added `ITSAppUsesNonExemptEncryption = NO` to the Xcode application baseline and completion audit, with a documented-exception path for apps that ship non-exempt encryption.
+- Added mandatory post-merge cleanup of merged local feature branches after returning to an updated primary branch.
+
+### Changed
+
+- Linked localization guidance to the shared App Store metadata workflow while keeping product voice, locales, and concrete storefront content in consumer repositories.
+
+## [0.0.27] - 2026-09-05
+
+### Fixed
+
+- Preserved valid GitHub alert syntax in the Markdown wrapping audit while continuing to reject hard-wrapped alert bodies, ordinary blockquotes, malformed alert markers, and nested alerts.
+
+## [0.0.26] - 2026-09-02
+
+### Added
+
+- Added a fail-closed completion-audit helper that requires structured Xcode String Catalog editor evidence for every changed `.xcstrings` file.
+- Added native Swift tests for guideline, consumer-integration, Markdown, and String Catalog automation.
+
+### Changed
+
+- Moved the shared localization guide from `Guidelines/Swift/` to `Guidelines/` and updated repository and consumer-template links.
+- Replaced Python validation, localization, and audit-helper scripts with native Swift executables, and moved CI and release validation to macOS runners.
+- Required new repository-owned executable scripts in Swift-focused repositories to use Swift, with the existing `swift_format.sh` wrapper retained as a narrow exception.
+
+## [0.0.25] - 2026-09-02
+
+### Added
+
+- Added generic generated-symbol localization guidance plus reusable String Catalog preparation and validation scripts with consumer-configured paths and languages.
+- Added an Xcode project-settings baseline covering warnings-as-errors, strict and approachable concurrency, default MainActor isolation, the latest stable Swift language mode, and every upcoming feature that remains opt-in for that language mode.
+- Added documentation conventions for single-line Markdown prose and aligned ASCII diagrams, together with a deterministic wrapping checker.
+
+### Changed
+
+- Expanded the completion audit to verify localization workflows, project-level Xcode setting inheritance and documented exceptions, documentation formatting, and convention adoption across existing durable documentation.
+- Updated the consumer template and guideline catalog for the new Xcode project-settings and localization workflows.
+
+## [0.0.24] - 2026-08-31
+
+### Added
+
+- Added a versioned external-dependency contract to consumer `AGENTS.md` files so applications, games, and reusable packages default to native or ThatFactory-owned implementations and require explicit repository-owner approval plus a durable decision record for third-party product dependencies.
+- Extended the completion audit and consumer-setup validation to detect unapproved or undocumented dependency additions and contract drift.
+
+### Changed
+
+- Clarified package guidance so first-party packages cannot conceal third-party runtime dependencies and guideline-mandated tooling remains tooling-only.
+
+## [0.0.23] - 2026-08-26
+
+### Added
+
+- Added a versioned documentation-maintenance contract to the consumer `AGENTS.md` template and consumer-setup validation so guideline upgrades detect projects that have not adopted the contract.
+
+### Changed
+
+- Strengthened documentation guidance and the completion audit so durable behavior changes and any change that makes existing documentation stale require documentation updates, while incidental implementation details do not create documentation churn.
+
+## [0.0.22] - 2026-08-24
+
+### Added
+
+- Required completion audits to verify and repair shared AppLogger integration for ThatFactory Apple-platform applications and Swift packages.
+
+## [0.0.21] - 2026-08-23
+
+### Changed
+
+- Clarified that the bounded review-round policy applies to Codex GitHub reviews, while otherwise-authorized ChatGPT and Reasoning Relay delegations use their own workflow limits.
+- Namespaced Codex review tracking fields and advanced the consumer code-review contract to v2.
+
+## [0.0.20] - 2026-08-21
+
+### Changed
+
+- Documented squash merge as the default for ThatFactory repositories and instructed agents to use `gh pr merge <pull-request> --squash` instead of attempting merge commits.
+
+## [0.0.19] - 2026-08-19
+
+### Added
+
+- Added a complete README badge-block example covering Swift, Xcode, platform, package manager, agent/tooling, DocC, license, updated, revision, CI, and publishing badges.
+
+### Changed
+
+- Updated this repository's README badges to use the canonical order and applicable tooling, release, and maintenance badges.
+- Updated the README contract validator to require the canonical `Xcode MCP` badge alt text.
+
 ## [0.0.18] - 2026-08-18
 
 ### Changed
