@@ -54,11 +54,8 @@ let tileEvaluation = tileExercise.evaluate(
 
 ### Intent Classification
 
-Use this module to define a prompt, candidate intents, and the expected intent.
-Then evaluate a selected intent and receive a typed evaluation result with correctness and score.
-When host apps use custom catalog models, conform them to ``LKIntentClassificationExerciseType`` and evaluate them with ``LKIntentClassificationEvaluator``.
+Use this module to define a prompt, candidate intents, and the expected intent. Then evaluate a selected intent and receive a typed evaluation result with correctness and score. When host apps use custom catalog models, conform them to ``LKIntentClassificationExerciseType`` and evaluate them with ``LKIntentClassificationEvaluator``.
 
 ### Construction
 
-Use tile assembly to define constrained writing construction exercises.
-Provide `availableTiles` and `expectedTiles`, then evaluate selected tiles via ``LKTileAssemblyExercise/evaluate(selectedTiles:scoring:)`` or ``LKTileAssemblyEvaluator``.
+Use tile assembly to define constrained writing construction exercises. Provide `availableTiles` and `expectedTiles`, then evaluate selected tiles via ``LKTileAssemblyExercise/evaluate(selectedTiles:scoring:)`` or ``LKTileAssemblyEvaluator``.

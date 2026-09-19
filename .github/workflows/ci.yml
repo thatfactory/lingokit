@@ -21,6 +21,9 @@ jobs:
         with:
           clean: true
 
+      - name: Validate Consumer Integration
+        run: AgentGuidelines/Scripts/validate_consumer_setup.swift
+
       - name: Run strict swift-format lint
         run: |
           AgentGuidelines/Scripts/swift_format.sh lint-strict \

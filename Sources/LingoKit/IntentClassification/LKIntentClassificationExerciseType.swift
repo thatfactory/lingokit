@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /// A protocol describing the data required to evaluate an intent-classification exercise.
 public protocol LKIntentClassificationExerciseType: Codable, Sendable {
